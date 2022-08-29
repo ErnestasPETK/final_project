@@ -5,7 +5,6 @@ import Header from "../UI/Header";
 const Guests = (props) => {
 
     const events = props.events;
-    console.log(events);
 
     const classes = "min-h-fit w-full px-3 py-5 rounded-lg shadow-xl flex flex-col justify-center" + props.className;
     return (<div className={classes}>

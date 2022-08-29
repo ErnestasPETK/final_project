@@ -101,20 +101,12 @@ const Event = (props) => {
             <Card className="dark:bg-slate-700 min-h-fit h-38 min-w-fit w-full px-3 py-5 dark:text-white text-center">
                 <div onClick={interactionHandler} className=" flex flex-row mt-2 justify-between">
                     <h2 className="font-bold text-xl">{props.name}</h2>
-                    {/* <GuestInteractions
-                        onDeleteInteraction={deleteInteractionHandler}
-                        onEditInteraction={editInteractionHandler}
-                    /> */}
                     <img className="h-10 w-11" alt="DropDown" src="https://img.icons8.com/external-flatart-icons-outline-flatarticons/64/000000/external-down-basic-ui-elements-flatart-icons-outline-flatarticons.png" />
                 </div>
             </Card>
             {/* <EventGuestList guests={guests} /> */}
             {interactionsActive.addGuest &&
                 <AddEventGuest onAddGuest={interactionHandler} eventId={props.id} />}
-            {/* {interactionsActive.edit && !interactionsActive.delete &&
-                <GuestEditInteractions onEdit={editHandler} prevData={props} />}
-            {interactionsActive.delete && !interactionsActive.edit &&
-                <GuestDeleteInteractions onDelete={deleteHandler} onDeleteCancel={deleteCancelHandler} prevData={props} />} */}
         </div>
     )
 }

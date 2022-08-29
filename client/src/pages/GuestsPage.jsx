@@ -22,17 +22,64 @@ const GuestsPage = () => {
         fetchGuests();
     }, []);
 
-    const addGuestHandler = (guest) => {
-        setGuests((prevGuests) => {
-            return [
-                ...prevGuests,
-                {
-                    name: guest.fullName,
-                    email: guest.email,
-                    date: new Date(guest.date),
+    const addGuestHandler = async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+
+        const newGuest = {
+            name: formData.get("name"),
+            email: formData.get("email"),
+            date: formData.get("date"),
+        };
+
+        const fetchNewGuest = async () => {
+            const response = await fetch("http://localhost:3001/api/v1/guests", {
+                method: "POST",
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + localStorage.getItem("token"),
                 },
-            ];
-        });
+                body: JSON.stringify(newGuest),
+            });
+            const data = await response.json();
+            if (parseInt(response.status) === 201) {
+                return data.id;
+            }
+            if ([404, 400, 500].includes(parseInt(response.status))) {
+                alert("Error adding guest: \n " + data.message);
+            }
+
+        };
+
+        const newGuestId = await fetchNewGuest();
+        if (newGuestId) {
+            if (guests.length > 0) {
+
+                setGuests((prevGuests) => {
+                    return [
+                        ...prevGuests,
+                        {
+                            id: newGuestId,
+                            name: newGuest.name,
+                            email: newGuest.email,
+                            date: new Date(newGuest.date),
+                        },
+                    ];
+                });
+            }
+            else {
+                setGuests(
+                    {
+                        id: newGuestId,
+                        name: newGuest.name,
+                        email: newGuest.email,
+                        date: new Date(newGuest.date),
+                    }
+                );
+            }
+        };
+
     };
 
     const deleteGuestHandler = (id) => {

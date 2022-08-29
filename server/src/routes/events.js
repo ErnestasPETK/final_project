@@ -53,16 +53,8 @@ router.get('/:id?', isLoggedIn, async (req, res) => {
 
     [response] = await connection.execute(
       `SELECT \
-      events.id AS event_id, \
-      events.name AS event_name, \
-      events.date AS event_date, \
-      events_has_guests.guests_id AS guests_id, \
-      guests.name AS guest_name, \
-      guests.date AS guest_date,\
-      guests.email AS guest_email \
+      * \
       FROM events \
-      LEFT JOIN events_has_guests ON events.id = events_has_guests.events_id \
-      LEFT JOIN guests ON events_has_guests.guests_id = guests.id
       ${eventId ? `WHERE events.id = ${mysql.escape(eventId)}` : ''}\
       `,
     );
