@@ -33,14 +33,16 @@ router.post('/', isLoggedIn, async (req, res) => {
     await connection.end();
 
     if (response.affectedRows === 1) {
-      return res.status(201).send({ ok: true, message: 'Guest created' });
+      return res
+        .status(201)
+        .send({ ok: true, message: 'Guest created', id: response.insertId });
     } else if (response.affectedRows === 0) {
       return res.status(400).send({ message: 'Failed to create guest' });
     } else {
       return res.status(200).send({ response: response });
     }
   } catch (err) {
-    return res.status(404).send({ err: `Bad request: \n  ${err}` });
+    return res.status(404).send({ message: `Bad request: ${err}` });
   }
 });
 
@@ -102,7 +104,6 @@ router.patch('/:id', isLoggedIn, async (req, res) => {
       WHERE id = ${mysql.escape(guestId)};
       `,
     );
-    console.log(response);
     await connection.end();
 
     if (response.affectedRows === 1) {

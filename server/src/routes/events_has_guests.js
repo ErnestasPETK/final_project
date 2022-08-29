@@ -5,10 +5,11 @@ const { MYSQL_CONFIG, eventHasGuestsSchema } = require('../config');
 
 const router = express.Router();
 
-router.post('/', isLoggedIn, async (req, res) => {
-  let { events_id: eventId, guests_id: guestId } = req.body;
+router.post('/:id', isLoggedIn, async (req, res) => {
+  let { id: eventId } = req.params;
+  let { guestId } = req.body;
   let response;
-
+  console.log(eventId, guestId);
   try {
     await eventHasGuestsSchema.validateAsync({
       eventId,
@@ -53,8 +54,12 @@ router.get('/:id?', isLoggedIn, async (req, res) => {
 
     [response] = await connection.execute(
       `SELECT \
-      * \
+      guests.id AS id, \
+      guests.name AS name, \
+      guests.date AS date,\
+      guests.email AS email \
       FROM events_has_guests \
+      LEFT JOIN guests ON events_has_guests.guests_id = guests.id
       ${
         eventId
           ? `WHERE events_has_guests.events_id = ${mysql.escape(eventId)}`
@@ -62,15 +67,14 @@ router.get('/:id?', isLoggedIn, async (req, res) => {
       }\
       `,
     );
-
     await connection.end();
-
-    if (response.length === 0) {
+    if (parseInt(response.length) < 1) {
       return res
-        .status(404)
-        .send({ message: 'No event guest configuration was found' });
-    } else {
-      return res.status(200).send({ eventHasGuests: response });
+        .status(204)
+        .send({ guests: [], message: 'This event has no guests' });
+    }
+    if (parseInt(response.length) > 0) {
+      return res.status(200).send({ ok: true, guests: response });
     }
   } catch (err) {
     return res.status(404).send({ err: `Bad request  ${err}` });
