@@ -1,16 +1,12 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Card from '../components/UI/Card';
+import React from 'react';
 
 const HomePage = () => {
-    const [userData, setUserData] = useState([]);
-    const navigate = useNavigate();
-
-
+    if (!localStorage.getItem("token")) {
+        window.location.href = "/login";
+    }
     return (
         <div className='dark'>
-            <div className="">
+            <div className="h-screen w-screen">
                 HOME
             </div>
         </div>

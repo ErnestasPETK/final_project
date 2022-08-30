@@ -4,6 +4,9 @@ import NewGuests from "../components/NewGuests/NewGuests";
 import Navigation from "../components/Navigation/Navigation";
 
 const GuestsPage = () => {
+    if (!localStorage.getItem("token")) {
+        window.location.href = "/login";
+    }
     const [guests, setGuests] = useState([]);
     useEffect(() => {
         const fetchGuests = async () => {

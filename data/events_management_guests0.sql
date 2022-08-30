@@ -16,36 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `events_has_guests`
+-- Table structure for table `guests`
 --
 
-DROP TABLE IF EXISTS `events_has_guests`;
+DROP TABLE IF EXISTS `guests`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `events_has_guests` (
+CREATE TABLE `guests` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `events_id` int(11) NOT NULL,
-  `guests_id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `date` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_idx` (`events_id`),
-  KEY `id_idx1` (`guests_id`),
-  CONSTRAINT `id` FOREIGN KEY (`events_id`) REFERENCES `events` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `events_has_guests`
+-- Dumping data for table `guests`
 --
 
-LOCK TABLES `events_has_guests` WRITE;
-/*!40000 ALTER TABLE `events_has_guests` DISABLE KEYS */;
-INSERT INTO `events_has_guests` VALUES
-(19,1,34),
-(20,2,34),
-(21,1,36),
-(22,3,35),
-(23,2,35);
-/*!40000 ALTER TABLE `events_has_guests` ENABLE KEYS */;
+LOCK TABLES `guests` WRITE;
+/*!40000 ALTER TABLE `guests` DISABLE KEYS */;
+INSERT INTO `guests` VALUES
+(34,'Guest one','guest@one.com','2322-12-31 00:00:00'),
+(35,'Guest Two','guest@two.com','2323-12-31 00:00:00'),
+(36,'Guest Three','guest@three.com','1223-12-31 00:00:00');
+/*!40000 ALTER TABLE `guests` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -57,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-29 22:24:31
+-- Dump completed on 2022-08-31  1:13:59
