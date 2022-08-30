@@ -3,6 +3,9 @@ import { useState } from 'react';
 import Events from '../components/Events/Events';
 
 const EventsPage = () => {
+    if (!localStorage.getItem("token")) {
+        window.location.href = "/login";
+    }
     const [events, setEvents] = useState([]);
     useEffect(() => {
         const fetchEvents = async () => {
