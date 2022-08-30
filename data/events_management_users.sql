@@ -16,33 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `guests`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `guests`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `guests` (
+CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` text NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `date` datetime NOT NULL,
+  `full_name` text NOT NULL,
+  `email` text NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `reg_timestamp` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4;
+  UNIQUE KEY `email_UNIQUE` (`email`) USING HASH
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `guests`
+-- Dumping data for table `users`
 --
 
-LOCK TABLES `guests` WRITE;
-/*!40000 ALTER TABLE `guests` DISABLE KEYS */;
-INSERT INTO `guests` VALUES
-(34,'Guest one','guest@one.com','2322-12-31 00:00:00'),
-(35,'Guest Two','guest@two.com','2323-12-31 00:00:00'),
-(36,'Guest Three','guest@three.com','1223-12-31 00:00:00');
-/*!40000 ALTER TABLE `guests` ENABLE KEYS */;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES
+(1,'Ernestas Ernestas','ernestas@ernestas.com','$2a$10$Bh2.qxSN8VT2Fruy1G0UqepZo38Yl/FzWLvpyNbQ/wP9.tY6O73RK','2022-08-30 22:07:55');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-29 22:24:30
+-- Dump completed on 2022-08-31  1:13:58
